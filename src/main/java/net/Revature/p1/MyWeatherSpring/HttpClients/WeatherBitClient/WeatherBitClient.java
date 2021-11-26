@@ -6,10 +6,7 @@ import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnectorImpl;
 import net.Revature.p1.MyWeatherSpring.HttpClients.WeatherClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-
-import java.util.ArrayList;
 
 @Component
 @Qualifier("WeatherBit")
@@ -96,7 +93,7 @@ public class WeatherBitClient implements WeatherClient {
         float rain = weatherBitDTO.getData().get(0).getPrecip();
 
 
-        /*JsonParser jsonParser = new JsonParser();
+       /* JsonParser jsonParser = new JsonParser();
         JsonObject jo = (JsonObject) jsonParser.parse(responseBody);
         JsonArray jsonArray = jo.getAsJsonArray("data");
         ArrayList weather = gson.fromJson(jsonArray, ArrayList.class);*/
@@ -111,7 +108,6 @@ public class WeatherBitClient implements WeatherClient {
         this.clouds = clouds;
         this.snow = snow;
         this.rain = rain;
-
 
         if (name == null) {
             System.err.println("Cannot connect to WeatherBit API");

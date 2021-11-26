@@ -1,16 +1,24 @@
 package net.Revature.p1.MyWeatherSpring.Weather;
 
 import lombok.Data;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
-@Repository
+@Entity
+@Table
+@Component
 public class Weather {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long Id;
     private String City;
     private String Description;
-  //we  private String Date;
+    private LocalDateTime DateTime;
     private float AVGTemperature;
     private float AVGHumidity;
     private float AVGPressure;

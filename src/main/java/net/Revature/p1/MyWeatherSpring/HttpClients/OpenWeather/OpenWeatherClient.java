@@ -6,10 +6,8 @@ import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnector;
 import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnectorImpl;
 import net.Revature.p1.MyWeatherSpring.HttpClients.WeatherClient;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 
 
 @Component
