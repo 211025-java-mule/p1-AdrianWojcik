@@ -15,16 +15,16 @@ public class Weather {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long Id;
-    private String City;
-    private String Description;
-    private LocalDateTime DateTime;
-    private float AVGTemperature;
-    private float AVGHumidity;
-    private float AVGPressure;
-    private float AVGWindSpeed;
-    private float AVGWindDirection;
-    private float Cloud;
-    private float Snow;
-    private float Rain;
+    private Long id;
+    private String city;
+    private String description;
+    private LocalDateTime dateTime;
+    private float aVGTemperature;
+    private float aVGHumidity;
+    private float aVGPressure;
+    private float aVGWindSpeed;
+    private float aVGWindDirection;
+    private float cloud;
+    private float snow;
+    private float rain;
 }

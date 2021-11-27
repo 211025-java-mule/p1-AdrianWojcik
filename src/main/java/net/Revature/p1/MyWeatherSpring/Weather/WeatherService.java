@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -27,6 +28,9 @@ public class WeatherService {
     @Autowired
     AVGWeatherCalculator avgWeatherCalculator;
 
+    @Autowired
+    WeatherRepository weatherRepository;
+
 
     public Weather getCurrentWeather(String cityName) {
         ArrayList<WeatherClient> weatherClients = new ArrayList<>();
@@ -35,7 +39,23 @@ public class WeatherService {
         for(WeatherClient weatherClient : weatherClients){
             weatherClient.getWeather(cityName);
         }
-        avgWeatherCalculator.save();
+        avgWeatherCalculator.calculateAVGWeatherParams();
+        weatherRepository.save(weather);
         return weather;
     }
+
+    public List<Weather> getHistory() {
+       return weatherRepository.findTop4ByOrderByIdDesc();
+
+    }
+
+    public Weather getString(String city){
+
+        System.out.println(weatherRepository.findTop4ByOrderByIdDesc().set(1, weather));
+      //  weatherRepository.findTop4ByOrderByIdDesc().contains(getString(city));
+
+       // return null;
+        return weatherRepository.findTop4ByOrderByIdDesc().set(1, weather);
+    }
+
 }

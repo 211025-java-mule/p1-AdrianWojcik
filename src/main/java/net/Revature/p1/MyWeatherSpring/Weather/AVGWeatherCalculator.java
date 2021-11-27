@@ -3,8 +3,12 @@ package net.Revature.p1.MyWeatherSpring.Weather;
 
 import net.Revature.p1.MyWeatherSpring.HttpClients.OpenWeather.OpenWeatherClient;
 import net.Revature.p1.MyWeatherSpring.HttpClients.WeatherBitClient.WeatherBitClient;
+import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 
 
 @Component
@@ -19,22 +23,20 @@ public class AVGWeatherCalculator {
     @Autowired
     Weather weather;
 
-    @Autowired
-    WeatherRepository weatherRepository;
 
-
-    public Weather save() {
+    public Weather calculateAVGWeatherParams() {
+        weather.setId(null);
         weather.setCity(openWeatherClient.getName());
         weather.setDescription(openWeatherClient.getDescription());
-        weather.setAVGTemperature(Math.round(calculateAverageTemperature()));
-        weather.setAVGHumidity(Math.round(calculateAverageHumidity()));
-        weather.setAVGPressure(Math.round(calculateAveragePressure()));
-        weather.setAVGWindSpeed(Math.round(calculateAverageWindSpeed()));
-        weather.setAVGWindDirection(Math.round(calculateAverageWindDirection()));
-        weather.setCloud(Math.round(weatherBitClient.getClouds()));
-        weather.setSnow(Math.round(weatherBitClient.getSnow()));
-        weather.setRain(Math.round(weatherBitClient.getRain()));
-        weatherRepository.save(weather);
+        weather.setAVGTemperature(calculateAverageTemperature());
+        weather.setAVGHumidity(calculateAverageHumidity());
+        weather.setAVGPressure(calculateAveragePressure());
+        weather.setAVGWindSpeed(calculateAverageWindSpeed());
+        weather.setAVGWindDirection(calculateAverageWindDirection());
+        weather.setDateTime(LocalDateTime.now());
+        weather.setCloud(weatherBitClient.getClouds());
+        weather.setSnow(weatherBitClient.getSnow());
+        weather.setRain(weatherBitClient.getRain());
         return weather;
     }
 
@@ -49,7 +51,7 @@ public class AVGWeatherCalculator {
         float averageTemperature =
                 (openWeatherClient.getTemperature() +
                         weatherBitClient.getTemperature()) / avgCounter;
-        return averageTemperature;
+        return (float) DoubleRounder.round(averageTemperature, 1);
     }
 
     public float calculateAverageHumidity() {
@@ -63,7 +65,7 @@ public class AVGWeatherCalculator {
         float averageHumidity =
                 (openWeatherClient.getHumidity() +
                         weatherBitClient.getHumidity()) / avgCounter;
-        return averageHumidity;
+        return (float) DoubleRounder.round(averageHumidity, 1);
     }
 
     public float calculateAveragePressure() {
@@ -77,7 +79,7 @@ public class AVGWeatherCalculator {
         float averagePressure =
                 (openWeatherClient.getPressure() +
                         weatherBitClient.getPressure()) / avgCounter;
-        return averagePressure;
+        return (float) DoubleRounder.round(averagePressure, 1);
     }
 
     public float calculateAverageWindSpeed() {
@@ -91,7 +93,7 @@ public class AVGWeatherCalculator {
         float averageWindSpeed =
                 (openWeatherClient.getWindSpeed() +
                         weatherBitClient.getWindSpeed()) / avgCounter;
-        return averageWindSpeed;
+        return (float) DoubleRounder.round(averageWindSpeed, 1);
     }
 
     public float calculateAverageWindDirection() {
@@ -105,7 +107,7 @@ public class AVGWeatherCalculator {
         float averageWindDirection =
                 (openWeatherClient.getWindDirection() +
                         weatherBitClient.getWindDirection()) / avgCounter;
-        return averageWindDirection;
+        return (float) DoubleRounder.round(averageWindDirection, 1);
     }
 
 
