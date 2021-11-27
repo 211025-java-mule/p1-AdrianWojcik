@@ -28,6 +28,14 @@ public class WeatherBitDTO {
         private float snow;
         private float clouds;
         private float precip;
+        private Weather weather;
 
+    }
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    class Weather{
+        private String icon;
     }
 }

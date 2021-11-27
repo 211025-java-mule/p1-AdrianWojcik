@@ -27,4 +27,5 @@ public class Weather {
     private float cloud;
     private float snow;
     private float rain;
+    private String image;
 }

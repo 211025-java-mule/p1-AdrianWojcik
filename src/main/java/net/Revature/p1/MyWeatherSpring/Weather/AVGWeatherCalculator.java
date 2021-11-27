@@ -37,6 +37,7 @@ public class AVGWeatherCalculator {
         weather.setCloud(weatherBitClient.getClouds());
         weather.setSnow(weatherBitClient.getSnow());
         weather.setRain(weatherBitClient.getRain());
+        weather.setImage(weatherBitClient.getIcon());
         return weather;
     }
 

@@ -21,6 +21,17 @@ public class WeatherBitClient implements WeatherClient {
     private float snow;
     private float clouds;
     private float rain;
+    private String icon;
+    private float windSpeed;
+    private float windDirection;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public float getSnow() {
         return snow;
@@ -45,10 +56,6 @@ public class WeatherBitClient implements WeatherClient {
     public void setRain(float rain) {
         this.rain = rain;
     }
-
-    private float windSpeed;
-    private float windDirection;
-
 
     public String getName() {
         return name;
@@ -91,6 +98,7 @@ public class WeatherBitClient implements WeatherClient {
         float snow = weatherBitDTO.getData().get(0).getSnow();
         float clouds = weatherBitDTO.getData().get(0).getClouds();
         float rain = weatherBitDTO.getData().get(0).getPrecip();
+        String icon = weatherBitDTO.getData().get(0).getWeather().getIcon();
 
 
        /* JsonParser jsonParser = new JsonParser();
@@ -108,6 +116,7 @@ public class WeatherBitClient implements WeatherClient {
         this.clouds = clouds;
         this.snow = snow;
         this.rain = rain;
+        this.icon = icon;
 
         if (name == null) {
             System.err.println("Cannot connect to WeatherBit API");

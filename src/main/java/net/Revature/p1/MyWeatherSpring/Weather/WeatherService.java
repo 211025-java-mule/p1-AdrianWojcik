@@ -49,13 +49,11 @@ public class WeatherService {
 
     }
 
-    public Weather getString(String city){
+    public List<Weather> getString(String city){
 
-        System.out.println(weatherRepository.findTop4ByOrderByIdDesc().set(1, weather));
-      //  weatherRepository.findTop4ByOrderByIdDesc().contains(getString(city));
+        //TODO
 
-       // return null;
-        return weatherRepository.findTop4ByOrderByIdDesc().set(1, weather);
+        return null;
     }
 
 }
