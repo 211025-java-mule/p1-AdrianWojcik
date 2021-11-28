@@ -4,6 +4,8 @@ import com.google.gson.*;
 import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnector;
 import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnectorImpl;
 import net.Revature.p1.MyWeatherSpring.HttpClients.WeatherClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Qualifier("WeatherBit")
 public class WeatherBitClient implements WeatherClient {
+
+    Logger logger = LoggerFactory.getLogger(WeatherBitClient.class);
 
     private final Gson gson = new Gson();
     private final String apiKey = "9943b74d5df149679b49dec61891605a";
@@ -86,7 +90,6 @@ public class WeatherBitClient implements WeatherClient {
         HttpClientConnector httpClientConnector = new HttpClientConnectorImpl();
         String URL = String.format("https://api.weatherbit.io/v2.0/current?&city=%s&key=%s", cityName, apiKey);
         String responseBody = httpClientConnector.initializeHttpConnection(URL);
-        System.out.println(responseBody);
 
         WeatherBitDTO weatherBitDTO = gson.fromJson(responseBody, WeatherBitDTO.class);
         String name = weatherBitDTO.getData().get(0).getCity_name();
@@ -119,9 +122,9 @@ public class WeatherBitClient implements WeatherClient {
         this.icon = icon;
 
         if (name == null) {
-            System.err.println("Cannot connect to WeatherBit API");
+            logger.info("Cannot Data from WeatherBit API");
         } else if (name != null) {
-            System.err.println("Downloaded Data from WeatherBit API");
+            logger.info("Downloaded Data from WeatherBit API");
         }
 
 

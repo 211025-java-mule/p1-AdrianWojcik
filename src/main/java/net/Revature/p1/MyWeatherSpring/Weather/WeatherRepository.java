@@ -10,6 +10,6 @@ public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
     public List<Weather> findTop4ByOrderByIdDesc();
 
-  //  public List<Weather> findTop4ByOrderByCityDesc(String city);
+    Long deleteById(long id);
 
 }

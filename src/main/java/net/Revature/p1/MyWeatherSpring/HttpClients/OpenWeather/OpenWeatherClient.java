@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnector;
 import net.Revature.p1.MyWeatherSpring.HttpClients.HttpClientConnectorImpl;
 import net.Revature.p1.MyWeatherSpring.HttpClients.WeatherClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Qualifier("OpenWeather")
 public class OpenWeatherClient implements WeatherClient {
 
+    Logger logger = LoggerFactory.getLogger(OpenWeatherClient.class);
 
     private  final Gson gson = new Gson();
     private final String apiKey = "d2523d4ce5199ce659dcad17ce29e5ed";
@@ -90,9 +93,9 @@ public class OpenWeatherClient implements WeatherClient {
 
         String URL = String.format("https://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=%s", cityName, apiKey);
         String responseBody = httpClientConnector.initializeHttpConnection(URL);
-        System.out.println(responseBody);
 
         OpenWeatherDTO openWeatherDTO = gson.fromJson(responseBody, OpenWeatherDTO.class);
+
         String name = openWeatherDTO.getName();
         float temperature = openWeatherDTO.getMain().getTemp();
         float pressure = openWeatherDTO.getMain().getPressure();
@@ -110,9 +113,9 @@ public class OpenWeatherClient implements WeatherClient {
         this.description = description;
 
         if(name == null){
-            System.err.println("Cannot connect to OpenWeather API");
+            logger.info("Cannot connect to OpenWeather API");
         }else if (name != null){
-            System.err.println("Downloaded Data from Open Weather API");
+            logger.info("Downloaded Data from Open Weather API");
         }
 
         return null;

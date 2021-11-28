@@ -1,6 +1,8 @@
 package net.Revature.p1.MyWeatherSpring.Weather;
 
 import net.Revature.p1.MyWeatherSpring.HttpClients.GoogleMapsClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping("/MyWeather")
 public class WeatherController {
+
+    Logger logger = LoggerFactory.getLogger(WeatherController.class);
 
 
     @Autowired
@@ -49,13 +53,37 @@ public class WeatherController {
     @PostMapping("")
     public String getCurrentWeatherForCity(@RequestParam String cityName) {
         String valid = cityName.replace(" ", "+");
-        weatherService.getCurrentWeather(valid);
-
+        if (valid.matches("[a-zA-Z+]+") || valid.length() <= 2) {
+            weatherService.getCurrentWeather(valid);
+        } else {
+            System.out.println(" \nPlease enter a letters only");
+            logger.info("Input Mismatch Exception");
+        }
         return "redirect:/MyWeather/currentWeather";
     }
     @GetMapping("/history/{city}")
-    public String showHistoricalForecast(@PathVariable String city){
-        //TODO
+    public String showHistoricalForecast(@PathVariable String city, Model model){
+        model.addAttribute("cityName", weatherService.getHistoryByCity(city).listIterator().next().getCity());
+        model.addAttribute("Maps", googleMapsClient.getMap(weatherService.getHistoryByCity(city).listIterator().next().getCity()));
+        model.addAttribute("AVGTemp", weatherService.getHistoryByCity(city).listIterator().next().getAVGTemperature());
+        model.addAttribute("Description", weatherService.getHistoryByCity(city).listIterator().next().getDescription());
+        model.addAttribute("Cloudy", weatherService.getHistoryByCity(city).listIterator().next().getCloud());
+        model.addAttribute("Humidity", weatherService.getHistoryByCity(city).listIterator().next().getAVGHumidity());
+        model.addAttribute("WindSpeed", weatherService.getHistoryByCity(city).listIterator().next().getAVGWindSpeed());
+        model.addAttribute("Rain", weatherService.getHistoryByCity(city).listIterator().next().getRain());
+        model.addAttribute("myPath", "/images/"+weatherService.getHistoryByCity(city).listIterator().next().getImage()+".png");
+        model.addAttribute("TimeDate", weatherService.getHistoryByCity(city).listIterator().next().getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        model.addAttribute("history1", weatherService.getHistory().get(0).getCity());
+        model.addAttribute("history2", weatherService.getHistory().get(1).getCity());
+        model.addAttribute("history3", weatherService.getHistory().get(2).getCity());
+        model.addAttribute("history4", weatherService.getHistory().get(3).getCity());
+        return "index";
+    }
+
+    @GetMapping("/currentWeather/{id}")
+    public String deleteByCity ( @PathVariable long id){
+        weatherService.deleteByCity(id);
         return "redirect:/MyWeather/currentWeather";
     }
+
 }
