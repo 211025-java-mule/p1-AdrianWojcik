@@ -9,7 +9,7 @@ public class GoogleMapsClient {
 
     Logger logger = LoggerFactory.getLogger(GoogleMapsClient.class);
 
-    private final String apiKey = "AIzaSyCVUBQtCf7M6qQh1X0bEUV-DCmZSUDpuxA";
+    private final String apiKey = "xxx";
 
     public String getMap(String city){
 
